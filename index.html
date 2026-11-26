@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HAC — Hongs Control Center</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header>
+
+        <div class="logo">
+
+            <div class="logo-box">
+                HCC
+            </div>
+
+            <div>
+
+                <div class="logo-text">
+                    Hongs Control Center
+                </div>
+
+                <div class="logo-subtitle">
+                    Everything in one place
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="search">
+
+            <span class="search-icon">
+                ⌕
+            </span>
+
+            <input
+                id="search"
+                type="text"
+                placeholder="Search apps..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <button
+            class="settings-btn"
+            id="settingsButton"
+            aria-label="Settings"
+        >
+            ⚙
+        </button>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <h1>
+                Welcome back.
+            </h1>
+
+            <p>
+                Your personal control center.
+            </p>
+
+        </section>
+
+
+        <!-- Categories -->
+
+        <div class="categories">
+
+            <button
+                class="category active"
+                data-category="All"
+            >
+                All
+            </button>
+
+            <button
+                class="category"
+                data-category="School"
+            >
+                School
+            </button>
+
+            <button
+                class="category"
+                data-category="Development"
+            >
+                Development
+            </button>
+
+            <button
+                class="category"
+                data-category="Utilities"
+            >
+                Utilities
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             APPLICATIONS
+        ========================== -->
+
+        <section
+            class="apps"
+            id="apps"
+        >
+
+
+            <!-- 1. HOME -->
+
+            <a
+                class="app"
+                href="https://hcpss.instructure.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-name="Home"
+                data-category="School"
+            >
+
+                <button
+                    class="favorite"
+                    aria-label="Favorite Home"
+                >
+                    ☆
+                </button>
+
+                <div class="app-icon">
+                    ⌂
+                </div>
+
+                <div>
+
+                    <h3>
+                        Home
+                    </h3>
+
+                    <p>
+                        HCPSS Canvas
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- 2. STUDENTVUE -->
+
+            <a
+                class="app"
+                href="https://md-hcpss-psv.edupoint.com/Home_PXP2.aspx"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-name="StudentVUE"
+                data-category="School"
+            >
+
+                <button
+                    class="favorite"
+                    aria-label="Favorite StudentVUE"
+                >
+                    ☆
+                </button>
+
+                <div class="app-icon">
+                    V
+                </div>
+
+                <div>
+
+                    <h3>
+                        StudentVUE
+                    </h3>
+
+                    <p>
+                        Student portal
+                    </p>
+
+                </div>
+
+            </a>
+
+                        <!-- 3. google drive -->
+
+            <a
+                class="app"
+                href="https://drive.google.com/drive/u/3/home"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-name="Google Drive"
+                data-category="School"
+            >
+
+                <button
+                    class="favorite"
+                    aria-label="Favorite Google Drive"
+                >
+                    ☆
+                </button>
+
+                <div class="app-icon">
+                    ▶
+                </div>
+
+                <div>
+
+                    <h3>
+                        Google Drive
+                    </h3>
+
+                    <p>
+                        Store and share files
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- 4. YOUTUBE -->
+
+            <a
+                class="app"
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-name="YouTube"
+                data-category="Utilities"
+            >
+
+                <button
+                    class="favorite"
+                    aria-label="Favorite YouTube"
+                >
+                    ☆
+                </button>
+
+                <div class="app-icon">
+                    ▶
+                </div>
+
+                <div>
+
+                    <h3>
+                        YouTube
+                    </h3>
+
+                    <p>
+                        Watch videos
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- 5. GITHUB -->
+
+            <a
+                class="app"
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-name="GitHub"
+                data-category="Development"
+            >
+
+                <button
+                    class="favorite"
+                    aria-label="Favorite GitHub"
+                >
+                    ☆
+                </button>
+
+                <div class="app-icon">
+                    ⌘
+                </div>
+
+                <div>
+
+                    <h3>
+                        GitHub
+                    </h3>
+
+                    <p>
+                        Development tools
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- 6. DISCORD -->
+
+            <a
+                class="app"
+                href="https://discord.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-name="Discord"
+                data-category="Utilities"
+            >
+
+                <button
+                    class="favorite"
+                    aria-label="Favorite Discord"
+                >
+                    ☆
+                </button>
+
+                <div class="app-icon">
+                    ◉
+                </div>
+
+                <div>
+
+                    <h3>
+                        Discord
+                    </h3>
+
+                    <p>
+                        Chat and communities
+                    </p>
+
+                </div>
+
+            </a>
+
+
+
+
+            <!-- 8. HCPSS -->
+
+            <a
+                class="app"
+                href="https://www.hcpss.me/"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-name="HCPSS"
+                data-category="School"
+            >
+
+                <button
+                    class="favorite"
+                    aria-label="Favorite HCPSS"
+                >
+                    ☆
+                </button>
+
+                <div class="app-icon">
+                    H
+                </div>
+
+                <div>
+
+                    <h3>
+                        HCPSS
+                    </h3>
+
+                    <p>
+                        School resources
+                    </p>
+
+                </div>
+
+            </a>
+
+
+        </section>
+
+
+        <div
+            class="empty"
+            id="empty"
+        >
+            No apps found.
+        </div>
+
+    </main>
+
+
+    <footer>
+        HCC • Hongs Control Center
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="script.js" defer></script>
+
+</body>
+</html>
+
