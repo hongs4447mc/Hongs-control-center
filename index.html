@@ -1,418 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>HAC — Hongs Control Center</title>
-
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a1020" />
+  <title>HCC — Hongs Control Center</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
 
-    <!-- =========================
-         HEADER
-    ========================== -->
+  <!-- Animated background (purely decorative) -->
+  <div class="bg" aria-hidden="true">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+  </div>
 
-    <header>
+  <!-- Top bar -->
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="brand-mark">H</span>
+      <div class="brand-text">
+        <strong>HCC</strong>
+        <small>Hongs Control Center</small>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" id="addBtnTop" type="button" aria-label="Add app" title="Add app">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <button class="icon-btn" id="settingsBtn" type="button" aria-label="Open settings" title="Settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5h0a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v0a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+      </button>
+    </div>
+  </header>
 
-        <div class="logo">
+  <main class="page">
 
-            <div class="logo-box">
-                HCC
-            </div>
+    <!-- Welcome -->
+    <section class="hero">
+      <p class="hero-date" id="heroDate"></p>
+      <h1 class="hero-title"><span id="greeting">Welcome</span><span class="hero-name" id="heroName"></span></h1>
+      <p class="hero-time" id="heroTime" aria-live="off"></p>
+    </section>
 
-            <div>
+    <!-- Search -->
+    <section class="search-row">
+      <label class="search glass" for="searchInput">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="searchInput" type="search" placeholder="Search apps…" autocomplete="off" spellcheck="false" />
+        <kbd class="kbd" id="searchHint">/</kbd>
+      </label>
+      <button class="btn btn-accent add-btn" id="addBtn" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        <span>Add app</span>
+      </button>
+    </section>
 
-                <div class="logo-text">
-                    Hongs Control Center
-                </div>
+    <!-- Category chips -->
+    <nav class="chips" id="chips" aria-label="Categories"></nav>
 
-                <div class="logo-subtitle">
-                    Everything in one place
-                </div>
+    <!-- App sections get rendered here by script.js -->
+    <div id="sections"></div>
 
-            </div>
+    <!-- Empty state -->
+    <div class="empty glass" id="empty" hidden>
+      <div class="empty-icon">🫧</div>
+      <h2 id="emptyTitle">Nothing here yet</h2>
+      <p id="emptyText">Add your first app to get started.</p>
+      <button class="btn btn-accent" id="emptyAddBtn" type="button">Add app</button>
+    </div>
 
-        </div>
+    <footer class="foot">Drag apps or category headings to reorder · Right-click for options · Saved locally; cloud sync when signed in</footer>
+  </main>
 
-
-        <div class="search">
-
-            <span class="search-icon">
-                ⌕
-            </span>
-
-            <input
-                id="search"
-                type="text"
-                placeholder="Search apps..."
-                autocomplete="off"
-            >
-
-        </div>
-
-
-        <button
-            class="settings-btn"
-            id="settingsButton"
-            aria-label="Settings"
-        >
-            ⚙
+  <!-- Add / edit app dialog -->
+  <dialog id="appDialog" class="modal glass">
+    <form id="appForm" method="dialog" autocomplete="off">
+      <header class="modal-head">
+        <h2 id="appDialogTitle">Add app</h2>
+        <button class="icon-btn small" type="button" data-close aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
         </button>
+      </header>
 
-    </header>
-
-
-    <!-- =========================
-         MAIN
-    ========================== -->
-
-    <main>
-
-        <section class="hero">
-
-            <h1>
-                Welcome back.
-            </h1>
-
-            <p>
-                Your personal control center.
-            </p>
-
-        </section>
-
-
-        <!-- Categories -->
-
-        <div class="categories">
-
-            <button
-                class="category active"
-                data-category="All"
-            >
-                All
-            </button>
-
-            <button
-                class="category"
-                data-category="School"
-            >
-                School
-            </button>
-
-            <button
-                class="category"
-                data-category="Development"
-            >
-                Development
-            </button>
-
-            <button
-                class="category"
-                data-category="Utilities"
-            >
-                Utilities
-            </button>
-
+      <div class="field">
+        <label for="appName">Name</label>
+        <input id="appName" type="text" maxlength="40" placeholder="e.g. YouTube" required />
+      </div>
+      <div class="field">
+        <label for="appUrl">Link</label>
+        <input id="appUrl" type="text" inputmode="url" placeholder="e.g. youtube.com" required />
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="appCategory">Category</label>
+          <input id="appCategory" type="text" maxlength="30" list="categoryList" placeholder="e.g. Media" />
+          <datalist id="categoryList"></datalist>
         </div>
-
-
-        <!-- =========================
-             APPLICATIONS
-        ========================== -->
-
-        <section
-            class="apps"
-            id="apps"
-        >
-
-
-            <!-- 1. HOME -->
-
-            <a
-                class="app"
-                href="https://hcpss.instructure.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-name="Home"
-                data-category="School"
-            >
-
-                <button
-                    class="favorite"
-                    aria-label="Favorite Home"
-                >
-                    ☆
-                </button>
-
-                <div class="app-icon">
-                    ⌂
-                </div>
-
-                <div>
-
-                    <h3>
-                        Home
-                    </h3>
-
-                    <p>
-                        HCPSS Canvas
-                    </p>
-
-                </div>
-
-            </a>
-
-
-            <!-- 2. STUDENTVUE -->
-
-            <a
-                class="app"
-                href="https://md-hcpss-psv.edupoint.com/Home_PXP2.aspx"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-name="StudentVUE"
-                data-category="School"
-            >
-
-                <button
-                    class="favorite"
-                    aria-label="Favorite StudentVUE"
-                >
-                    ☆
-                </button>
-
-                <div class="app-icon">
-                    V
-                </div>
-
-                <div>
-
-                    <h3>
-                        StudentVUE
-                    </h3>
-
-                    <p>
-                        Student portal
-                    </p>
-
-                </div>
-
-            </a>
-
-                        <!-- 3. google drive -->
-
-            <a
-                class="app"
-                href="https://drive.google.com/drive/u/3/home"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-name="Google Drive"
-                data-category="School"
-            >
-
-                <button
-                    class="favorite"
-                    aria-label="Favorite Google Drive"
-                >
-                    ☆
-                </button>
-
-                <div class="app-icon">
-                    ▶
-                </div>
-
-                <div>
-
-                    <h3>
-                        Google Drive
-                    </h3>
-
-                    <p>
-                        Store and share files
-                    </p>
-
-                </div>
-
-            </a>
-
-
-            <!-- 4. YOUTUBE -->
-
-            <a
-                class="app"
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-name="YouTube"
-                data-category="Utilities"
-            >
-
-                <button
-                    class="favorite"
-                    aria-label="Favorite YouTube"
-                >
-                    ☆
-                </button>
-
-                <div class="app-icon">
-                    ▶
-                </div>
-
-                <div>
-
-                    <h3>
-                        YouTube
-                    </h3>
-
-                    <p>
-                        Watch videos
-                    </p>
-
-                </div>
-
-            </a>
-
-
-            <!-- 5. GITHUB -->
-
-            <a
-                class="app"
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-name="GitHub"
-                data-category="Development"
-            >
-
-                <button
-                    class="favorite"
-                    aria-label="Favorite GitHub"
-                >
-                    ☆
-                </button>
-
-                <div class="app-icon">
-                    ⌘
-                </div>
-
-                <div>
-
-                    <h3>
-                        GitHub
-                    </h3>
-
-                    <p>
-                        Development tools
-                    </p>
-
-                </div>
-
-            </a>
-
-
-            <!-- 6. DISCORD -->
-
-            <a
-                class="app"
-                href="https://discord.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-name="Discord"
-                data-category="Utilities"
-            >
-
-                <button
-                    class="favorite"
-                    aria-label="Favorite Discord"
-                >
-                    ☆
-                </button>
-
-                <div class="app-icon">
-                    ◉
-                </div>
-
-                <div>
-
-                    <h3>
-                        Discord
-                    </h3>
-
-                    <p>
-                        Chat and communities
-                    </p>
-
-                </div>
-
-            </a>
-
-
-
-
-            <!-- 8. HCPSS -->
-
-            <a
-                class="app"
-                href="https://www.hcpss.me/"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-name="HCPSS"
-                data-category="School"
-            >
-
-                <button
-                    class="favorite"
-                    aria-label="Favorite HCPSS"
-                >
-                    ☆
-                </button>
-
-                <div class="app-icon">
-                    H
-                </div>
-
-                <div>
-
-                    <h3>
-                        HCPSS
-                    </h3>
-
-                    <p>
-                        School resources
-                    </p>
-
-                </div>
-
-            </a>
-
-
-        </section>
-
-
-        <div
-            class="empty"
-            id="empty"
-        >
-            No apps found.
+        <div class="field field-icon">
+          <label for="appIcon">Icon</label>
+          <input id="appIcon" type="text" maxlength="4" placeholder="🎬" />
         </div>
+      </div>
+      <p class="hint">Icon is optional: use an emoji, or leave it blank to use the first letter of the name.</p>
+      <p class="form-error" id="appError" role="alert" hidden></p>
 
-    </main>
+      <footer class="modal-foot">
+        <button class="btn btn-danger" id="deleteAppBtn" type="button" hidden>Delete</button>
+        <span class="spacer"></span>
+        <button class="btn" type="button" data-close>Cancel</button>
+        <button class="btn btn-accent" type="submit">Save</button>
+      </footer>
+    </form>
+  </dialog>
 
+  <!-- Settings dialog -->
+  <dialog id="settingsDialog" class="modal glass">
+    <div class="modal-body">
+      <header class="modal-head">
+        <h2>Settings</h2>
+        <button class="icon-btn small" type="button" data-close aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </header>
 
-    <footer>
-        HCC • Hongs Control Center
-    </footer>
+      <div class="field">
+        <label for="setName">Your name</label>
+        <input id="setName" type="text" maxlength="24" placeholder="Shown in the greeting" />
+      </div>
 
+      <div class="field">
+        <span class="label">Theme</span>
+        <div class="segmented" id="themeSeg" role="group" aria-label="Theme">
+          <button type="button" data-theme-value="dark">Dark</button>
+          <button type="button" data-theme-value="light">Light</button>
+        </div>
+      </div>
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
+      <div class="field">
+        <span class="label">Accent color</span>
+        <div class="swatches" id="swatches" role="group" aria-label="Accent color"></div>
+        <label class="custom-color">
+          <input id="setAccent" type="color" />
+          <span>Choose a custom color</span>
+        </label>
+        <label for="setAccentCode">Or enter a color code</label>
+        <input id="setAccentCode" type="text" maxlength="32" placeholder="1C2EA0 or rgb(28, 46, 160)" autocomplete="off" spellcheck="false" aria-describedby="accentCodeHint accentCodeError" />
+        <p class="hint" id="accentCodeHint">Use a hex code (with or without #) or an rgb(r, g, b) value.</p>
+        <p class="form-error" id="accentCodeError" role="alert" hidden></p>
+      </div>
 
-    <script src="script.js" defer></script>
+      <label class="toggle">
+        <input id="setNewTab" type="checkbox" />
+        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        <span>Open apps in a new tab</span>
+      </label>
 
+      <section class="cloud-panel" aria-labelledby="cloudTitle">
+        <h3 id="cloudTitle">Cloud sync</h3>
+        <p id="cloudStatus" class="cloud-status" role="status" aria-live="polite">Checking cloud sync setup…</p>
+        <form id="cloudAuthForm" autocomplete="on">
+          <div class="field">
+            <label for="cloudEmail">Email</label>
+            <input id="cloudEmail" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="cloudPassword">Password</label>
+            <input id="cloudPassword" type="password" autocomplete="current-password" minlength="6" required />
+          </div>
+          <div class="cloud-actions">
+            <button class="btn btn-accent" id="cloudSignIn" type="submit">Sign in</button>
+            <button class="btn" id="cloudSignUp" type="button">Create account</button>
+          </div>
+        </form>
+        <div id="cloudAccount" hidden>
+          <p>Signed in as <strong id="cloudUserEmail"></strong></p>
+          <button class="btn" id="cloudSignOut" type="button">Sign out</button>
+        </div>
+      </section>
+
+      <div class="danger-zone">
+        <button class="btn" id="resetAppsBtn" type="button">Restore default apps</button>
+        <button class="btn btn-danger" id="resetAllBtn" type="button">Reset everything</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="supabase-config.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
-
